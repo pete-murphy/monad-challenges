@@ -1,0 +1,4 @@
+:set -package monad-challenges
+:set -XInstanceSigs
+:set -XNoImplicitPrelude
+:set -XTupleSections

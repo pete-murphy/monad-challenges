@@ -1,0 +1,30 @@
+{
+  "name": "monad-challenges",
+  "version": "1.0.0",
+  "description": "The goal of this project is to provide a roadmap for hands-on exploration and experimentation with monads. It is still rough and there is a fair amount content that could be added.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mightybyte/monad-challenges.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mightybyte/monad-challenges/issues"
+  },
+  "homepage": "https://github.com/mightybyte/monad-challenges#readme",
+  "devDependencies": {
+    "@babel/plugin-transform-typescript": "^7.5.5",
+    "@typescript-eslint/parser": "^2.0.0",
+    "eslint": "^6.2.1",
+    "eslint-config-standard": "^14.0.0"
+  },
+  "dependencies": {
+    "fp-ts": "^2.0.5",
+    "typescript": "^3.5.3"
+  }
+}

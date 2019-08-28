@@ -10,3 +10,5 @@ hakyll/site
 src/Set[1-5].hs
 .ghc.environment.*
 result
+
+node_modules
