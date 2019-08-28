@@ -1,7 +1,7 @@
 import { none, some, Option, fold } from "fp-ts/lib/Option";
 
 // headMay :: [a] -> Maybe a
-// headMay []     = Nothing
+// headMay []    = Nothing
 // headMay (x:_) = Just x
 export const headMay = <A>([x, ..._]: Array<A>): Option<A> =>
   x === undefined ? none : some(x);
@@ -56,3 +56,10 @@ export const minimumMay = ([x, ...xs]: Array<number>): Option<number> =>
 export const mapMay = <A, B>(f: (x: A) => B) => (
   maybeA: Option<A>
 ): Option<B> => fold(() => none, (x: A) => some(f(x)))(maybeA);
+
+// chain :: Maybe a -> (a -> Maybe b) -> Maybe b
+// chain Nothing _          = Nothing
+// chain (Just a) aToMaybeB = aToMaybeB a
+export const chainMay = <A>(maybeA: Option<A>) => <B>(
+  aToMaybeB: (x: A) => Option<B>
+): Option<B> => fold(() => none, aToMaybeB)(maybeA);
