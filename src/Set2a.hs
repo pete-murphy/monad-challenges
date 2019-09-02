@@ -57,7 +57,7 @@ maximumMay (a:as) =
     Nothing -> Just a
     Just a' -> Just (max a a')
 
-data Down a =
+newtype Down a =
   Down
     { getDown :: a
     }
@@ -72,3 +72,6 @@ mapMay f (Just a) = Just (f a)
 
 minimumMay :: Ord a => [a] -> Maybe a
 minimumMay as = mapMay getDown (maximumMay $ map Down as)
+
+addSalaries :: [(String, Integer)] -> String -> String -> Maybe Integer
+addSalaries ss p1 p2 = lookupMay p1 ss lookupMay p2 ss

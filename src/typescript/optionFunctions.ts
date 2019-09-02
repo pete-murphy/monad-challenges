@@ -1,4 +1,6 @@
 import { none, some, Option, fold } from "fp-ts/lib/Option";
+import { Eq } from "fp-ts/lib/Eq";
+import { Ord, max, min } from "fp-ts/lib/Ord";
 
 // headMay :: [a] -> Maybe a
 // headMay []    = Nothing
@@ -18,10 +20,11 @@ export const tailMay = <A>([_, ...xs]: Array<A>): Option<Array<A>> =>
 //   if x == x'
 //     then Just y
 //     else lookupMay x pairs
-export const lookupMay = <A>(x: A) => <B>([[x_, y], ...pairs]: Array<
-  [A, B]
->): Option<B> =>
-  x_ === undefined ? none : x === x_ ? some(y) : lookupMay(x)(pairs);
+export const lookupMay = <A>(E: Eq<A>) => (x: A) => <B>([
+  [x_, y],
+  ...pairs
+]: Array<[A, B]>): Option<B> =>
+  x_ === undefined ? none : E.equals(x, x_) ? some(y) : lookupMay(E)(x)(pairs);
 
 // divMay :: (Eq a, Fractional a) => a -> a -> Maybe a
 // divMay numerator 0           = Nothing
@@ -36,19 +39,15 @@ export const divMay = (numerator: number) => (
 //   case maximumMay xs of
 //     Nothing -> Just x
 //     Just x' -> Just (max x x')
-export const maximumMay = ([x, ...xs]: Array<number>): Option<number> =>
+export const maximumMay = <A>(O: Ord<A>) => ([x, ...xs]: Array<A>): Option<A> =>
   x === undefined
     ? none
-    : fold(() => some(x), (x_: number) => some(Math.max(x, x_)))(
-        maximumMay(xs)
-      );
+    : fold(() => some(x), (x_: A) => some(max(O)(x, x_)))(maximumMay(O)(xs));
 
-export const minimumMay = ([x, ...xs]: Array<number>): Option<number> =>
+export const minimumMay = <A>(O: Ord<A>) => ([x, ...xs]: Array<A>): Option<A> =>
   x === undefined
     ? none
-    : fold(() => some(x), (x_: number) => some(Math.min(x, x_)))(
-        minimumMay(xs)
-      );
+    : fold(() => some(x), (x_: A) => some(min(O)(x, x_)))(minimumMay(O)(xs));
 
 // mapMay :: (a -> b) -> Maybe a -> Maybe b
 // mapMay f Nothing  = Nothing
